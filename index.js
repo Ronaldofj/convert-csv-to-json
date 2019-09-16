@@ -1,11 +1,11 @@
-const csvFilePath = 'input/dadosUnidadesAfs.csv';
+const csvFilePath = 'input/dados.csv';
 const csv = require('csvtojson');
 
 const { geraArquivo } = require('./functions.js');
 const { formataTelefones } = require('./functions.js');
 const { formataPath } = require('./functions.js');
 
-let unidades = [];
+let dataExport = [];
 
 (async () => {
 	await csv().fromFile(csvFilePath).then(
@@ -37,11 +37,11 @@ let unidades = [];
 						}
 					};
 	
-					unidades.push(unidade);
+					dataExport.push(unidade);
 				})
 		}
 	)
-	await geraArquivo(unidades);
+	await geraArquivo(dataExport);
 })();
 
 

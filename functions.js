@@ -1,7 +1,7 @@
 const fs = require("fs").promises;
 
 function formataPath(cidade, bairro, index) {
-	const cidadeBairro = `${cidade} ${bairro !== '' ? bairro : index}`
+	const cidadeBairro = `${cidade}${bairro !== '' ? "-" + bairro : cidade === "São Paulo" ? "-" + index : ""}`
 
 	const pathSemAcento = cidadeBairro.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	const pathSemEspaco = pathSemAcento.split(' ').join('-');
