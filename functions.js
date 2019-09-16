@@ -1,10 +1,23 @@
-const fs = require("fs")
+const fs = require("fs").promises;
 
-// function que formata o telefone
+function formataPath(cidade, bairro, index) {
+	const cidadeBairro = `${cidade} ${bairro !== '' ? bairro : index}`
+
+	const pathSemAcento = cidadeBairro.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+	const pathSemEspaco = pathSemAcento.split(' ').join('-');
+
+	return pathSemEspaco.toLowerCase();
+}
+
 function formataTelefones(telefonesBrutos) {
 	let telefones = [];
 
 	telefonesBrutos.map((telefone, i) => {
+
+		if(telefone === 'null') {
+			return false;
+		}
+
 		telefones.push({
 				tipo: telefone.length > 15 ? 'celular' : 'fixo',
 				numero: telefone,
@@ -17,10 +30,11 @@ function formataTelefones(telefonesBrutos) {
 }
 
 function geraArquivo(dados) {
-
+	fs.writeFile("output/unidades.json", JSON.stringify(dados, null, 2));
 }
 
 module.exports = {
 	formataTelefones,
-	geraArquivo
+	geraArquivo,
+	formataPath
 }
